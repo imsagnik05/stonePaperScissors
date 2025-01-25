@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stone Paper Scissors</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="game-container">
+    <h1>Stone Paper Scissors</h1>
+    <p class="instructions">Choose your move:</p>
+    <div class="buttons">
+      <button class="choice" data-choice="rock">✊ Rock</button>
+      <button class="choice" data-choice="paper">✋ Paper</button>
+      <button class="choice" data-choice="scissors">✌️ Scissors</button>
+    </div>
+    <div class="result">
+      <p id="result-message">Make your move to start!</p>
+      <p id="scores">Player: 0 | Computer: 0</p>
+    </div>
+    <button id="restart" class="restart">Restart Game</button>
+    <canvas id="fireworksCanvas"></canvas> <!-- Canvas for fireworks effect -->
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

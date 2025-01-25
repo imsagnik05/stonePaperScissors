@@ -1,0 +1,94 @@
+/* Global Styles */
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom right, #f3f1eb, #d9d2c9);
+  color: #cf0707;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  transition: background-color 1s ease, color 1s ease;
+}
+
+/* Canvas for Fireworks */
+#fireworksCanvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  /* Keep it behind the content */
+  pointer-events: none;
+  display: none;
+  /* Hide by default */
+}
+
+/* Gloomy Effect for Loss */
+gloomy-background {
+  background-color: #2c3e50;
+  color: #fff;
+  transition: background-color 1s ease, color 1s ease;
+}
+
+gloomy-message {
+  color: #e74d3c48;
+  font-weight: bold;
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Additional Styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Georgia', serif;
+  color: #333;
+  margin: 10px 0;
+}
+
+p {
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+button {
+  background-color: #30837f;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  border-radius: 23px;
+}
+
+button:hover {
+  background-color: #a00505;
+}
+
+a {
+  color: #da5c5c;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+a:hover {
+  color: #a00505;
+}
