@@ -4,24 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Stone Paper Scissors</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Welcome Screen -->
+  <div id="welcome-screen">
+    <h2>Welcome to Stone Paper Scissors!</h2>
+    <p>Choose rock, paper, or scissors to play against the computer.</p>
+    <p>The game is best of 3 rounds. The one with more wins after 3 rounds wins!</p>
+    <button id="start-game">Start Game</button>
+  </div>
+
+  <!-- Game Container -->
   <div class="game-container">
     <h1>Stone Paper Scissors</h1>
     <p class="instructions">Choose your move:</p>
     <div class="buttons">
-      <button class="choice" data-choice="rock">✊ Rock</button>
-      <button class="choice" data-choice="paper">✋ Paper</button>
-      <button class="choice" data-choice="scissors">✌️ Scissors</button>
+      <button class="choice" data-choice="rock"><i class="fas fa-hand-rock"></i> Rock</button>
+      <button class="choice" data-choice="paper"><i class="fas fa-hand-paper"></i> Paper</button>
+      <button class="choice" data-choice="scissors"><i class="fas fa-hand-scissors"></i> Scissors</button>
     </div>
     <div class="result">
       <p id="result-message">Make your move to start!</p>
-      <p id="scores">Player: 0 | Computer: 0</p>
+      <p id="round-wins">Player wins: 0 | Computer wins: 0</p>
     </div>
     <button id="restart" class="restart">Restart Game</button>
-    <canvas id="fireworksCanvas"></canvas> <!-- Canvas for fireworks effect -->
+    <canvas id="fireworksCanvas"></canvas>
   </div>
+
+  <!-- Audio Elements -->
+  <audio id="clickSound" src="click.mp3" preload="auto"></audio>
+  <audio id="winSound" src="win.mp3" preload="auto"></audio>
+  <audio id="loseSound" src="lose.mp3" preload="auto"></audio>
+  <audio id="drawSound" src="draw.mp3" preload="auto"></audio>
+
   <script src="script.js"></script>
 </body>
 </html>
