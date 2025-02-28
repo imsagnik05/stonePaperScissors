@@ -1,19 +1,27 @@
 const choices = ["rock", "paper", "scissors"];
-let playerScore = 0;
-let computerScore = 0;
+let round = 1;
+let playerWins = 0;
+let computerWins = 0;
+const totalRounds = 3;
 
-// Select DOM elements
+// DOM Elements
 const buttons = document.querySelectorAll(".choice");
 const resultMessage = document.getElementById("result-message");
-const scores = document.getElementById("scores");
+const roundWins = document.getElementById("round-wins");
 const restartButton = document.getElementById("restart");
 const canvas = document.getElementById("fireworksCanvas");
 const ctx = canvas.getContext("2d");
+const welcomeScreen = document.getElementById("welcome-screen");
+const startButton = document.getElementById("start-game");
+const clickSound = document.getElementById("clickSound");
+const winSound = document.getElementById("winSound");
+const loseSound = document.getElementById("loseSound");
+const drawSound = document.getElementById("drawSound");
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-// Fireworks effect function
+// Fireworks Effect
 function createFireworksEffect() {
   const particles = [];
   for (let i = 0; i < 100; i++) {
@@ -38,69 +46,93 @@ function createFireworksEffect() {
       ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
       ctx.fillStyle = particle.color;
       ctx.fill();
-
-      if (particle.life > 50) {
-        particles.splice(index, 1);
-      }
+      if (particle.life > 50) particles.splice(index, 1);
     });
 
     if (particles.length > 0) {
       requestAnimationFrame(animateParticles);
     } else {
-      canvas.style.display = "none";  // Hide fireworks once finished
+      canvas.style.display = "none";
     }
   }
 
-  canvas.style.display = "block";  // Show the canvas
+  canvas.style.display = "block";
   animateParticles();
 }
 
-// Function to get computer's choice
+// Computer Choice
 function getComputerChoice() {
-  const randomIndex = Math.floor(Math.random() * choices.length);
-  return choices[randomIndex];
+  return choices[Math.floor(Math.random() * choices.length)];
 }
 
-// Function to determine the winner
+// Play a Round
 function playRound(playerChoice) {
+  document.body.classList.remove("gloomy-background");
+  resultMessage.classList.remove("gloomy-message");
+
   const computerChoice = getComputerChoice();
+  let roundResult;
 
   if (playerChoice === computerChoice) {
-    return `It's a draw! Both chose ${playerChoice}.`;
-  }
-
-  if (
+    roundResult = `Round ${round}: It's a draw! Both chose ${playerChoice}.`;
+    drawSound.play();
+  } else if (
     (playerChoice === "rock" && computerChoice === "scissors") ||
     (playerChoice === "paper" && computerChoice === "rock") ||
     (playerChoice === "scissors" && computerChoice === "paper")
   ) {
-    playerScore++;
-    createFireworksEffect();  // Trigger fireworks when player wins
-    return `You win! ${playerChoice} beats ${computerChoice}.`;
+    playerWins++;
+    roundResult = `Round ${round}: You win! ${playerChoice} beats ${computerChoice}.`;
+    winSound.play();
+    createFireworksEffect();
   } else {
-    computerScore++;
-    document.body.classList.add("gloomy-background"); // Apply gloomy effect
-    resultMessage.classList.add("gloomy-message"); // Change message style
-    return `You lose! ${computerChoice} beats ${playerChoice}.`;
+    computerWins++;
+    roundResult = `Round ${round}: You lose! ${computerChoice} beats ${playerChoice}.`;
+    loseSound.play();
+    document.body.classList.add("gloomy-background");
+    resultMessage.classList.add("gloomy-message");
+  }
+
+  resultMessage.textContent = roundResult;
+  roundWins.textContent = `Player wins: ${playerWins} | Computer wins: ${computerWins}`;
+
+  round++;
+  if (round > totalRounds) {
+    let gameResult;
+    if (playerWins > computerWins) {
+      gameResult = "Game over! You win the game!";
+      createFireworksEffect(); // Optional: Add a bigger effect here if desired
+    } else if (computerWins > playerWins) {
+      gameResult = "Game over! Computer wins the game!";
+      document.body.classList.add("gloomy-background");
+    } else {
+      gameResult = "Game over! It's a draw!";
+    }
+    resultMessage.textContent = gameResult;
   }
 }
 
-// Handle button clicks
+// Button Click Events
 buttons.forEach((button) => {
   button.addEventListener("click", () => {
+    clickSound.play();
     const playerChoice = button.getAttribute("data-choice");
-    const result = playRound(playerChoice);
-    resultMessage.textContent = result;
-    scores.textContent = `Player: ${playerScore} | Computer: ${computerScore}`;
+    playRound(playerChoice);
   });
 });
 
-// Restart game
+// Start Game
+startButton.addEventListener("click", () => {
+  welcomeScreen.style.display = "none";
+});
+
+// Restart Game
 restartButton.addEventListener("click", () => {
-  playerScore = 0;
-  computerScore = 0;
+  round = 1;
+  playerWins = 0;
+  computerWins = 0;
   resultMessage.textContent = "Make your move to start!";
-  scores.textContent = "Player: 0 | Computer: 0";
+  roundWins.textContent = "Player wins: 0 | Computer wins: 0";
   document.body.classList.remove("gloomy-background");
   resultMessage.classList.remove("gloomy-message");
 });
